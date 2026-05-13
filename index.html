@@ -15,14 +15,21 @@
     color: #1c1c1e;
     font-size: 17px;
     -webkit-font-smoothing: antialiased;
-    padding-bottom: calc(200px + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  .scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 20px;
   }
 
   /* === Top bar === */
   .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    flex-shrink: 0;
     background: rgba(248, 248, 250, 0.92);
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
@@ -165,10 +172,16 @@
   }
 
   /* === Floating Add button === */
+  .fab-wrap {
+    position: sticky;
+    bottom: 16px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 20px;
+    margin-top: -56px;
+    pointer-events: none;
+  }
   .fab {
-    position: fixed;
-    right: 20px;
-    bottom: calc(100px + env(safe-area-inset-bottom));
     width: 56px;
     height: 56px;
     border-radius: 50%;
@@ -179,25 +192,23 @@
     font-weight: 300;
     box-shadow: 0 4px 16px rgba(26,43,94,0.35);
     cursor: pointer;
-    z-index: 20;
     display: flex;
     align-items: center;
     justify-content: center;
     line-height: 1;
     padding-bottom: 4px;
+    pointer-events: auto;
   }
   .fab:active { transform: scale(0.95); }
 
   /* === Bottom send bar === */
   .sendbar {
-    position: fixed;
-    left: 0; right: 0; bottom: 0;
+    flex-shrink: 0;
     background: rgba(248, 248, 250, 0.95);
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     border-top: 0.5px solid #c6c6c8;
     padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-    z-index: 15;
   }
   .send-btn {
     width: 100%;
@@ -326,44 +337,48 @@
   </div>
 </div>
 
-<div class="section">Shift Info</div>
-<div class="group">
-  <div class="row">
-    <label>Officer</label>
-    <input type="text" id="dutyOfficer" placeholder="Name" autocomplete="off">
+<div class="scroll-area">
+  <div class="section">Shift Info</div>
+  <div class="group">
+    <div class="row">
+      <label>Officer</label>
+      <input type="text" id="dutyOfficer" placeholder="Name" autocomplete="off">
+    </div>
+    <div class="row">
+      <label>Location</label>
+      <input type="text" id="location" placeholder="Post / site" autocomplete="off">
+    </div>
+    <div class="row">
+      <label>Date</label>
+      <input type="date" id="date">
+    </div>
+    <div class="row">
+      <label>Start</label>
+      <input type="time" id="startTime">
+    </div>
+    <div class="row">
+      <label>End</label>
+      <input type="time" id="endTime">
+    </div>
   </div>
-  <div class="row">
-    <label>Location</label>
-    <input type="text" id="location" placeholder="Post / site" autocomplete="off">
+
+  <div class="section">Log Entries</div>
+  <div class="entries" id="entries">
+    <div class="empty-state" id="emptyState">Tap + to add your first entry</div>
   </div>
-  <div class="row">
-    <label>Date</label>
-    <input type="date" id="date">
+
+  <div class="section">Signature</div>
+  <div class="group">
+    <div class="row">
+      <label>Sign</label>
+      <input type="text" id="signature" placeholder="Type full name" autocomplete="off">
+    </div>
   </div>
-  <div class="row">
-    <label>Start</label>
-    <input type="time" id="startTime">
-  </div>
-  <div class="row">
-    <label>End</label>
-    <input type="time" id="endTime">
+
+  <div class="fab-wrap">
+    <button class="fab" id="fabBtn" aria-label="Add entry">+</button>
   </div>
 </div>
-
-<div class="section">Log Entries</div>
-<div class="entries" id="entries">
-  <div class="empty-state" id="emptyState">Tap + to add your first entry</div>
-</div>
-
-<div class="section">Signature</div>
-<div class="group">
-  <div class="row">
-    <label>Sign</label>
-    <input type="text" id="signature" placeholder="Type full name" autocomplete="off">
-  </div>
-</div>
-
-<button class="fab" id="fabBtn" aria-label="Add entry">+</button>
 
 <!-- Action sheet for picking entry time -->
 <div class="sheet-backdrop" id="sheetBackdrop"></div>
