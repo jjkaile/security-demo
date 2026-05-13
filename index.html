@@ -171,35 +171,32 @@
     font-size: 15px;
   }
 
-  /* === Floating Add button === */
-  .fab-wrap {
-    position: sticky;
-    bottom: 16px;
-    display: flex;
-    justify-content: flex-end;
-    padding: 0 20px;
-    margin-top: -56px;
-    pointer-events: none;
-  }
-  .fab {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: #1a2b5e;
-    color: white;
+  /* === Inline Add Entry button === */
+  .add-entry-btn {
+    width: calc(100% - 32px);
+    margin: 8px 16px 4px;
+    padding: 14px;
+    background: white;
+    color: #1a2b5e;
     border: none;
-    font-size: 30px;
-    font-weight: 300;
-    box-shadow: 0 4px 16px rgba(26,43,94,0.35);
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 600;
+    font-family: inherit;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 1;
-    padding-bottom: 4px;
-    pointer-events: auto;
+    gap: 6px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
   }
-  .fab:active { transform: scale(0.95); }
+  .add-entry-btn:active { background: #f0f0f5; }
+  .add-entry-btn .plus {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
 
   /* === Bottom send bar === */
   .sendbar {
@@ -364,8 +361,11 @@
 
   <div class="section">Log Entries</div>
   <div class="entries" id="entries">
-    <div class="empty-state" id="emptyState">Tap + to add your first entry</div>
+    <div class="empty-state" id="emptyState">Tap + Add Entry below to start</div>
   </div>
+  <button class="add-entry-btn" id="fabBtn">
+    <span class="plus">+</span> Add Entry
+  </button>
 
   <div class="section">Signature</div>
   <div class="group">
@@ -373,10 +373,6 @@
       <label>Sign</label>
       <input type="text" id="signature" placeholder="Type full name" autocomplete="off">
     </div>
-  </div>
-
-  <div class="fab-wrap">
-    <button class="fab" id="fabBtn" aria-label="Add entry">+</button>
   </div>
 </div>
 
@@ -477,7 +473,7 @@
       const empty = document.createElement('div');
       empty.className = 'empty-state';
       empty.id = 'emptyState';
-      empty.textContent = 'Tap + to add your first entry';
+      empty.textContent = 'Tap + Add Entry below to start';
       document.getElementById('entries').appendChild(empty);
     }
   }
